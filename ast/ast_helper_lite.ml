@@ -17,7 +17,7 @@
 open Stdlib0
 module Location = Astlib.Location
 module Longident = Astlib.Longident
-open Astlib.Ast_500
+open Astlib.Ast_501
 
 [@@@warning "-9"]
 
