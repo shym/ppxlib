@@ -21,7 +21,7 @@
 (* Extensive Rewrite: Hongbo Zhang: University of Pennsylvania *)
 (* TODO more fine-grained precedence pretty-printing *)
 
-open Ast_501
+open Ast_414
 open Asttypes
 open Format
 open Location
@@ -1281,8 +1281,6 @@ and module_expr ctxt f x =
     | Pmod_apply (me1, me2) ->
         pp f "(%a)(%a)" (module_expr ctxt) me1 (module_expr ctxt) me2
         (* Cf: #7200 *)
-    | Pmod_apply_unit me ->
-        pp f "(%a)" (module_expr ctxt) me
     | Pmod_unpack e -> pp f "(val@ %a)" (expression ctxt) e
     | Pmod_extension e -> extension ctxt f e
 

@@ -1,5 +1,3 @@
-(** Attribute hygiene *)
-
 (** This module provides hygiene for attributes. The goal is to report misuses
     of attributes to the user as soon as possible so that no mistyped attribute
     get silently ignored. *)
@@ -128,6 +126,14 @@ val declare_with_name_loc :
   ('a, 'c) t
 (** Same as [declare] but the callback receives the location of the name of the
     attribute. *)
+
+val declare_with_attr_loc :
+  string ->
+  'a Context.t ->
+  (payload, 'b, 'c) Ast_pattern.t ->
+  (attr_loc:Location.t -> 'b) ->
+  ('a, 'c) t
+(** Same as [declare] but the callback receives the location of the attribute. *)
 
 val name : _ t -> string
 val context : ('a, _) t -> 'a Context.t

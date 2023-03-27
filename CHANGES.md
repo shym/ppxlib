@@ -1,6 +1,21 @@
 unreleased
 ------------------
 
+- Add `Attribute.declare_with_attr_loc` (#396, @dvulakh)
+
+- Add "ns" and "res" as reserved namespaces(#388, @davesnx)
+
+0.29.1 (14/02/2023)
+------------------
+
+- Allow users to vendor `ppxlib` as-is, as well as `ppx_sexp_conv` in the same project (#386, @kit-ty-kate)
+
+0.29.0 (06/02/2023)
+------------------
+
+- Remove `File_path` exports. (#381, @ceastlund)
+
+- Add `Ppxlib.Expansion_helpers` with name mangling utilities from ppx_deriving (#370, @sim642)
 
 0.28.0 (05/10/2022)
 -------------------

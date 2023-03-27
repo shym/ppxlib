@@ -987,7 +987,6 @@ and module_expr_desc = Parsetree.module_expr_desc =
   | Pmod_functor of functor_parameter * module_expr
       (** [functor(X : MT1) -> ME] *)
   | Pmod_apply of module_expr * module_expr  (** [ME1(ME2)] *)
-  | Pmod_apply_unit of module_expr (** [ME1()] *)
   | Pmod_constraint of module_expr * module_type  (** [(ME : MT)] *)
   | Pmod_unpack of expression  (** [(val E)] *)
   | Pmod_extension of extension  (** [\[%id\]] *)
@@ -2212,9 +2211,6 @@ class virtual map =
             let a = self#module_expr a in
             let b = self#module_expr b in
             Pmod_apply (a, b)
-        | Pmod_apply_unit a ->
-            let a = self#module_expr a in
-            Pmod_apply_unit a
         | Pmod_constraint (a, b) ->
             let a = self#module_expr a in
             let b = self#module_type b in
@@ -3141,8 +3137,6 @@ class virtual iter =
         | Pmod_apply (a, b) ->
             self#module_expr a;
             self#module_expr b
-        | Pmod_apply_unit a ->
-            self#module_expr a
         | Pmod_constraint (a, b) ->
             self#module_expr a;
             self#module_type b
@@ -4186,9 +4180,6 @@ class virtual ['acc] fold =
         | Pmod_apply (a, b) ->
             let acc = self#module_expr a acc in
             let acc = self#module_expr b acc in
-            acc
-        | Pmod_apply_unit a ->
-            let acc = self#module_expr a acc in
             acc
         | Pmod_constraint (a, b) ->
             let acc = self#module_expr a acc in
@@ -5492,9 +5483,6 @@ class virtual ['acc] fold_map =
             let a, acc = self#module_expr a acc in
             let b, acc = self#module_expr b acc in
             (Pmod_apply (a, b), acc)
-        | Pmod_apply_unit a ->
-            let a, acc = self#module_expr a acc in
-            (Pmod_apply_unit a, acc)
         | Pmod_constraint (a, b) ->
             let a, acc = self#module_expr a acc in
             let b, acc = self#module_type b acc in
@@ -6793,9 +6781,6 @@ class virtual ['ctx] map_with_context =
             let a = self#module_expr ctx a in
             let b = self#module_expr ctx b in
             Pmod_apply (a, b)
-        | Pmod_apply_unit a ->
-            let a = self#module_expr ctx a in
-            Pmod_apply_unit a
         | Pmod_constraint (a, b) ->
             let a = self#module_expr ctx a in
             let b = self#module_type ctx b in
@@ -8266,9 +8251,6 @@ class virtual ['res] lift =
             let a = self#module_expr a in
             let b = self#module_expr b in
             self#constr "Pmod_apply" [ a; b ]
-        | Pmod_apply_unit a ->
-            let a = self#module_expr a in
-            self#constr "Pmod_apply_unit" [ a ]
         | Pmod_constraint (a, b) ->
             let a = self#module_expr a in
             let b = self#module_type b in
@@ -10191,10 +10173,6 @@ class virtual ['ctx, 'res] lift_map_with_context =
             let b = self#module_expr ctx b in
             ( Pmod_apply (Stdlib.fst a, Stdlib.fst b),
               self#constr ctx "Pmod_apply" [ Stdlib.snd a; Stdlib.snd b ] )
-        | Pmod_apply_unit a ->
-            let a = self#module_expr ctx a in
-            ( Pmod_apply_unit (Stdlib.fst a),
-              self#constr ctx "Pmod_apply_unit" [ Stdlib.snd a ] )
         | Pmod_constraint (a, b) ->
             let a = self#module_expr ctx a in
             let b = self#module_type ctx b in
